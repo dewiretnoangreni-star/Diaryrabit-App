@@ -1,0 +1,40 @@
+{
+  "users": {
+    "nama@gmail.com": {
+      "salt": "0e67979219f6deecac3818b0c8e14c95",
+      "hash": "0ae46ad4ed11077514453ef09a10524ed87b0b75511f0408a715ed450da63939",
+      "journal": {
+        "2026-09-30": "jadi hari ini anu",
+        "2026-10-01": "ini itu"
+      },
+      "diary": [
+        {
+          "id": "f496c7dd08eb4ebf8572628e0028681d",
+          "title": "aku marah",
+          "text": "anu ini itu",
+          "created": "2026-09-30 16:33",
+          "updated": "2026-09-30 16:34:15"
+        }
+      ],
+      "schedule": {}
+    },
+    "wiraara@gmail.com": {
+      "salt": "d570d93e929c9858ff2418b2c24f1332",
+      "hash": "d88fa8c54911c2ae2eaf0384ef67abeb8a0de2789c3ac5551c09c4438a1077c7",
+      "journal": {},
+      "diary": [],
+      "timetable": {
+        "2": [
+          {
+            "id": "546d45b8d9884173a3dda0c537dfa724",
+            "start": "07:00",
+            "end": "12:00",
+            "subject": "pai"
+          }
+        ]
+      },
+      "study": {}
+    }
+  },
+  "last_email": "wiraara@gmail.com"
+}

@@ -1,0 +1,768 @@
+#:kivy 2.0.0
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+#:set C_BG get_color_from_hex('#FDE7F3')
+#:set C_PINK get_color_from_hex('#F472B6')
+#:set C_PINK_D get_color_from_hex('#DB2777')
+#:set C_VIOLET get_color_from_hex('#8B5CF6')
+#:set C_PURPLE get_color_from_hex('#6D28D9')
+#:set C_LILAC get_color_from_hex('#EDE9FE')
+#:set C_BLUSH get_color_from_hex('#FBCFE8')
+#:set C_TEXT get_color_from_hex('#4C1D95')
+#:set C_SOFT get_color_from_hex('#A78BFA')
+#:set C_PAPER get_color_from_hex('#FFF7FB')
+
+# ---------------------------------------------------------------- widget dasar
+<BaseScreen>:
+    canvas.before:
+        Color:
+            rgba: C_BG
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<RoundButton>:
+    background_normal: ''
+    background_down: ''
+    background_color: 0, 0, 0, 0
+    color: 1, 1, 1, 1
+    bold: True
+    font_size: '16sp'
+    size_hint_y: None
+    height: dp(50)
+    canvas.before:
+        Color:
+            rgba: self.btn_color if self.state == 'normal' else C_PINK_D
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [self.height / 2]
+
+<Field@TextInput>:
+    multiline: False
+    size_hint_y: None
+    height: dp(46)
+    padding: dp(12), dp(13)
+    font_size: '15sp'
+    background_normal: ''
+    background_active: ''
+    background_color: C_LILAC
+    foreground_color: C_TEXT
+    cursor_color: C_PINK_D
+    hint_text_color: C_SOFT
+
+<PaperInput@TextInput>:
+    padding: dp(12), dp(12)
+    font_size: '16sp'
+    background_normal: ''
+    background_active: ''
+    background_color: C_PAPER
+    foreground_color: C_TEXT
+    cursor_color: C_PINK_D
+    hint_text_color: C_SOFT
+
+<NavBtn@Button>:
+    text: ''
+    size_hint_x: None
+    width: dp(44)
+    font_size: '26sp'
+    bold: True
+    background_normal: ''
+    background_down: ''
+    background_color: 0, 0, 0, 0
+    color: C_PURPLE
+
+<LinkBtn@Button>:
+    markup: True
+    size_hint_y: None
+    height: dp(28)
+    font_size: '12sp'
+    background_normal: ''
+    background_down: ''
+    background_color: 0, 0, 0, 0
+    color: C_PINK_D
+    disabled_color: C_PINK_D
+
+<LeftLabel@Label>:
+    size_hint_y: None
+    height: dp(22)
+    halign: 'left'
+    valign: 'middle'
+    text_size: self.size
+    color: C_TEXT
+    bold: True
+
+<TopBar>:
+    size_hint_y: None
+    height: dp(56)
+    padding: dp(6), 0
+    canvas.before:
+        Color:
+            rgba: C_VIOLET
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Button:
+        text: '<'
+        size_hint_x: None
+        width: dp(44)
+        font_size: '26sp'
+        bold: True
+        background_normal: ''
+        background_down: ''
+        background_color: 0, 0, 0, 0
+        color: 1, 1, 1, 1
+        opacity: 1 if root.show_back else 0
+        disabled: not root.show_back
+        on_release: app.go_back()
+    Label:
+        text: root.title
+        font_size: '19sp'
+        bold: True
+        halign: 'left'
+        valign: 'middle'
+        text_size: self.size
+        color: 1, 1, 1, 1
+
+<RabbitLogo@Widget>:
+    canvas:
+        # telinga
+        Color:
+            rgba: C_PINK
+        Ellipse:
+            pos: self.x + self.width * 0.16, self.y + self.height * 0.48
+            size: self.width * 0.24, self.height * 0.52
+        Ellipse:
+            pos: self.x + self.width * 0.60, self.y + self.height * 0.48
+            size: self.width * 0.24, self.height * 0.52
+        Color:
+            rgba: C_BLUSH
+        Ellipse:
+            pos: self.x + self.width * 0.21, self.y + self.height * 0.55
+            size: self.width * 0.14, self.height * 0.36
+        Ellipse:
+            pos: self.x + self.width * 0.65, self.y + self.height * 0.55
+            size: self.width * 0.14, self.height * 0.36
+        # wajah
+        Color:
+            rgba: 1, 1, 1, 1
+        Ellipse:
+            pos: self.x + self.width * 0.05, self.y
+            size: self.width * 0.9, self.height * 0.66
+        # mata
+        Color:
+            rgba: C_PURPLE
+        Ellipse:
+            pos: self.x + self.width * 0.28, self.y + self.height * 0.34
+            size: dp(9), dp(11)
+        Ellipse:
+            pos: self.x + self.width * 0.62, self.y + self.height * 0.34
+            size: dp(9), dp(11)
+        # hidung & pipi
+        Color:
+            rgba: C_PINK_D
+        Ellipse:
+            pos: self.x + self.width * 0.44, self.y + self.height * 0.22
+            size: dp(11), dp(8)
+        Color:
+            rgba: C_BLUSH
+        Ellipse:
+            pos: self.x + self.width * 0.14, self.y + self.height * 0.2
+            size: dp(14), dp(9)
+        Ellipse:
+            pos: self.x + self.width * 0.68, self.y + self.height * 0.2
+            size: dp(14), dp(9)
+
+<DayButton>:
+    background_normal: ''
+    background_down: ''
+    background_color: 0, 0, 0, 0
+    color: self.fg
+    bold: self.has_note
+    font_size: '14sp'
+    canvas.before:
+        Color:
+            rgba: self.bg
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(8)]
+
+<DiaryRow>:
+    size_hint_y: None
+    height: dp(66)
+    markup: True
+    halign: 'left'
+    valign: 'middle'
+    text_size: self.width - dp(28), self.height
+    color: C_TEXT
+    background_normal: ''
+    background_down: ''
+    background_color: 0, 0, 0, 0
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1) if self.state == 'normal' else C_BLUSH
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(14)]
+
+<SchedRow>:
+    size_hint_y: None
+    height: dp(38)
+    spacing: dp(6)
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(10)]
+    Label:
+        text: root.time
+        size_hint_x: None
+        width: dp(64)
+        bold: True
+        color: C_PURPLE
+    Label:
+        text: root.activity
+        halign: 'left'
+        valign: 'middle'
+        text_size: self.size
+        shorten: True
+        color: C_TEXT
+    Button:
+        text: 'x'
+        size_hint_x: None
+        width: dp(38)
+        bold: True
+        background_normal: ''
+        background_down: ''
+        background_color: 0, 0, 0, 0
+        color: C_PINK_D
+        on_release: root.delete_cb(root.index)
+
+<LessonRow>:
+    size_hint_y: None
+    height: dp(48)
+    spacing: dp(2)
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(12)]
+    Button:
+        text: root.time_text + '    ' + root.subject
+        halign: 'left'
+        valign: 'middle'
+        text_size: self.width - dp(24), self.height
+        shorten: True
+        shorten_from: 'right'
+        bold: True
+        color: C_TEXT
+        background_normal: ''
+        background_down: ''
+        background_color: 0, 0, 0, 0
+        on_release: root.edit_cb(root.item_id)
+    Button:
+        text: 'x'
+        size_hint_x: None
+        width: dp(40)
+        bold: True
+        background_normal: ''
+        background_down: ''
+        background_color: 0, 0, 0, 0
+        color: C_PINK_D
+        on_release: root.delete_cb(root.item_id)
+
+# ---------------------------------------------------------------- LOGIN
+<LoginScreen>:
+    name: 'login'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(28), dp(20)
+        spacing: dp(8)
+        Widget:
+            size_hint_y: None
+            height: dp(20)
+        RabbitLogo:
+            size_hint: None, None
+            size: dp(90), dp(100)
+            pos_hint: {'center_x': .5}
+        Label:
+            text: 'Rabit Notes'
+            font_size: '32sp'
+            bold: True
+            color: C_PURPLE
+            size_hint_y: None
+            height: dp(44)
+        Label:
+            text: 'catatan harianmu bersama rabit'
+            font_size: '13sp'
+            color: C_PINK_D
+            size_hint_y: None
+            height: dp(24)
+        Widget:
+            size_hint_y: None
+            height: dp(10)
+        LeftLabel:
+            text: 'Gmail'
+        Field:
+            id: email_in
+            hint_text: 'nama@gmail.com'
+            input_type: 'mail'
+            write_tab: False
+            on_text_validate: root.ids.pw_in.focus = True
+        LeftLabel:
+            text: 'Password'
+        Field:
+            id: pw_in
+            hint_text: 'minimal 6 karakter'
+            password: True
+            write_tab: False
+            on_text_validate: root.do_login()
+        LinkBtn:
+            text: '[u]Tampilkan / sembunyikan password[/u]'
+            on_release: root.ids.pw_in.password = not root.ids.pw_in.password
+        Label:
+            text: root.msg
+            color: C_PINK_D
+            font_size: '12sp'
+            size_hint_y: None
+            height: dp(20)
+        RoundButton:
+            text: 'Masuk'
+            on_release: root.do_login()
+        Label:
+            text: 'Belum punya akun? Isi Gmail & password baru,\nakun otomatis dibuat saat pertama masuk.'
+            font_size: '11sp'
+            halign: 'center'
+            color: C_SOFT
+            size_hint_y: None
+            height: dp(36)
+        Widget:
+
+# ---------------------------------------------------------------- BERANDA
+<HomeScreen>:
+    name: 'home'
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            size_hint_y: None
+            height: dp(112)
+            padding: dp(20), dp(16)
+            spacing: dp(14)
+            canvas.before:
+                Color:
+                    rgba: C_VIOLET
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Label:
+                text: root.initial
+                size_hint: None, None
+                size: dp(64), dp(64)
+                font_size: '28sp'
+                bold: True
+                color: 1, 1, 1, 1
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Ellipse:
+                        pos: self.x - dp(2), self.y - dp(2)
+                        size: self.width + dp(4), self.height + dp(4)
+                    Color:
+                        rgba: C_PINK
+                    Ellipse:
+                        pos: self.pos
+                        size: self.size
+            BoxLayout:
+                orientation: 'vertical'
+                Label:
+                    text: 'Halo, ' + root.name_text
+                    font_size: '18sp'
+                    bold: True
+                    halign: 'left'
+                    valign: 'bottom'
+                    text_size: self.size
+                    color: 1, 1, 1, 1
+                Label:
+                    text: root.email_text
+                    font_size: '12sp'
+                    halign: 'left'
+                    valign: 'top'
+                    text_size: self.size
+                    color: C_BLUSH
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: dp(86)
+            padding: 0, dp(8)
+            canvas.before:
+                Color:
+                    rgba: C_PURPLE
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Label:
+                text: root.date_text
+                font_size: '15sp'
+                bold: True
+                color: 1, 1, 1, 1
+            Label:
+                text: root.time_text
+                font_size: '28sp'
+                bold: True
+                color: C_BLUSH
+        BoxLayout:
+            orientation: 'vertical'
+            padding: dp(30), dp(10)
+            spacing: dp(4)
+            Label:
+                text: root.notice
+                color: C_PINK_D
+                font_size: '12sp'
+                size_hint_y: None
+                height: dp(22)
+            Label:
+                text: 'Mau ngapain hari ini?'
+                font_size: '16sp'
+                bold: True
+                color: C_TEXT
+                size_hint_y: None
+                height: dp(32)
+            RoundButton:
+                text: 'Jurnal Rabit'
+                height: dp(54)
+                btn_color: C_PINK
+                on_release: app.open_journal()
+            Label:
+                text: 'catatan harian bersama rabit'
+                font_size: '11sp'
+                color: C_SOFT
+                size_hint_y: None
+                height: dp(20)
+            RoundButton:
+                text: 'Diary'
+                height: dp(54)
+                btn_color: C_VIOLET
+                on_release: app.go('diary')
+            Label:
+                text: 'tulis cerita keseharianmu'
+                font_size: '11sp'
+                color: C_SOFT
+                size_hint_y: None
+                height: dp(20)
+            RoundButton:
+                text: 'Jadwal Pelajaran'
+                height: dp(54)
+                btn_color: C_PINK
+                on_release: app.open_timetable()
+            Label:
+                text: 'jadwal harian, bisa diubah-ubah'
+                font_size: '11sp'
+                color: C_SOFT
+                size_hint_y: None
+                height: dp(18)
+            RoundButton:
+                text: 'Stopwatch Belajar'
+                height: dp(54)
+                btn_color: C_VIOLET
+                on_release: app.go('stopwatch')
+            Label:
+                text: 'hitung menit belajarmu'
+                font_size: '11sp'
+                color: C_SOFT
+                size_hint_y: None
+                height: dp(18)
+            Widget:
+            LinkBtn:
+                text: '[u]Keluar akun[/u]'
+                font_size: '13sp'
+                on_release: app.logout()
+
+# ---------------------------------------------------------------- JURNAL RABIT
+<JournalScreen>:
+    name: 'journal'
+    BoxLayout:
+        orientation: 'vertical'
+        TopBar:
+            title: 'Jurnal Rabit'
+        BoxLayout:
+            size_hint_y: None
+            height: dp(44)
+            padding: dp(10), 0
+            NavBtn:
+                text: '<'
+                on_release: root.shift(-1)
+            Label:
+                text: root.date_text
+                font_size: '17sp'
+                bold: True
+                color: C_TEXT
+            NavBtn:
+                text: '>'
+                on_release: root.shift(1)
+        LinkBtn:
+            text: root.today_text
+            disabled: root.is_today
+            on_release: root.go_today()
+        BoxLayout:
+            padding: dp(14), dp(8)
+            canvas.before:
+                Color:
+                    rgba: C_BLUSH
+                RoundedRectangle:
+                    pos: self.x + dp(12), self.y + dp(6)
+                    size: self.width - dp(24), self.height - dp(12)
+                    radius: [dp(14)]
+            PaperInput:
+                id: txt
+                hint_text: 'Tulis ceritamu hari ini...'
+                on_text: root.on_change()
+        Label:
+            text: root.status
+            font_size: '11sp'
+            color: C_SOFT
+            size_hint_y: None
+            height: dp(26)
+
+# ---------------------------------------------------------------- DIARY (daftar)
+<DiaryListScreen>:
+    name: 'diary'
+    BoxLayout:
+        orientation: 'vertical'
+        TopBar:
+            title: 'Diary'
+        BoxLayout:
+            size_hint_y: None
+            height: dp(72)
+            padding: dp(30), dp(11)
+            RoundButton:
+                text: '+  Tulis Diary Baru'
+                on_release: app.new_diary()
+        ScrollView:
+            do_scroll_x: False
+            GridLayout:
+                id: list
+                cols: 1
+                spacing: dp(8)
+                padding: dp(14), dp(4), dp(14), dp(14)
+                size_hint_y: None
+                height: self.minimum_height
+
+# ---------------------------------------------------------------- DIARY (tulis)
+<DiaryEditScreen>:
+    name: 'diary_edit'
+    back_to: 'diary'
+    BoxLayout:
+        orientation: 'vertical'
+        TopBar:
+            title: 'Tulis Diary'
+        Label:
+            text: root.date_text
+            font_size: '13sp'
+            bold: True
+            color: C_PINK_D
+            size_hint_y: None
+            height: dp(34)
+        BoxLayout:
+            size_hint_y: None
+            height: dp(52)
+            padding: dp(14), dp(3)
+            Field:
+                id: title_in
+                hint_text: 'Judul diary'
+                on_text: root.on_change()
+        BoxLayout:
+            padding: dp(14), dp(8)
+            canvas.before:
+                Color:
+                    rgba: C_BLUSH
+                RoundedRectangle:
+                    pos: self.x + dp(12), self.y + dp(6)
+                    size: self.width - dp(24), self.height - dp(12)
+                    radius: [dp(14)]
+            PaperInput:
+                id: body_in
+                hint_text: 'Ceritakan harimu...'
+                on_text: root.on_change()
+        Label:
+            text: root.status
+            font_size: '11sp'
+            color: C_SOFT
+            size_hint_y: None
+            height: dp(22)
+        LinkBtn:
+            text: '[u]Hapus diary ini[/u]'
+            on_release: root.delete()
+
+# ---------------------------------------------------------------- JADWAL PELAJARAN
+<TimetableScreen>:
+    name: 'timetable'
+    BoxLayout:
+        orientation: 'vertical'
+        TopBar:
+            title: 'Jadwal Pelajaran'
+        BoxLayout:
+            id: days
+            size_hint_y: None
+            height: dp(46)
+            padding: dp(8), dp(6)
+            spacing: dp(3)
+        Label:
+            text: root.day_text
+            font_size: '13sp'
+            bold: True
+            color: C_TEXT
+            size_hint_y: None
+            height: dp(26)
+        ScrollView:
+            do_scroll_x: False
+            GridLayout:
+                id: lessons
+                cols: 1
+                spacing: dp(6)
+                padding: dp(14), dp(4)
+                size_hint_y: None
+                height: self.minimum_height
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: dp(164)
+            padding: dp(12), dp(6)
+            spacing: dp(4)
+            canvas.before:
+                Color:
+                    rgba: C_BLUSH
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Label:
+                text: root.form_title
+                font_size: '12sp'
+                bold: True
+                color: C_PURPLE
+                size_hint_y: None
+                height: dp(22)
+            BoxLayout:
+                size_hint_y: None
+                height: dp(46)
+                spacing: dp(6)
+                Field:
+                    id: start_in
+                    hint_text: 'Mulai 07:00'
+                Field:
+                    id: end_in
+                    hint_text: 'Selesai 08:30'
+            BoxLayout:
+                size_hint_y: None
+                height: dp(46)
+                spacing: dp(6)
+                Field:
+                    id: sub_in
+                    hint_text: 'Mata pelajaran'
+                    on_text_validate: root.submit()
+                RoundButton:
+                    text: root.form_btn
+                    font_size: '14sp'
+                    size_hint_x: None
+                    width: dp(100)
+                    height: dp(46)
+                    on_release: root.submit()
+            LinkBtn:
+                text: '[u]Batal ubah[/u]' if root.editing else ' '
+                disabled: not root.editing
+                on_release: root.cancel_edit()
+
+# ---------------------------------------------------------------- STOPWATCH BELAJAR
+<StopwatchScreen>:
+    name: 'stopwatch'
+    BoxLayout:
+        orientation: 'vertical'
+        TopBar:
+            title: 'Stopwatch Belajar'
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: dp(150)
+            padding: dp(26), dp(14)
+            canvas.before:
+                Color:
+                    rgba: C_PURPLE
+                RoundedRectangle:
+                    pos: self.x + dp(14), self.y + dp(10)
+                    size: self.width - dp(28), self.height - dp(20)
+                    radius: [dp(24)]
+            Label:
+                text: root.clock_text
+                font_size: '52sp'
+                bold: True
+                color: 1, 1, 1, 1
+            Label:
+                text: root.status
+                font_size: '12sp'
+                color: C_BLUSH
+                size_hint_y: None
+                height: dp(22)
+        BoxLayout:
+            size_hint_y: None
+            height: dp(58)
+            padding: dp(14), dp(6)
+            Field:
+                id: subj_in
+                hint_text: 'Belajar apa? (mis. Matematika)'
+        BoxLayout:
+            size_hint_y: None
+            height: dp(58)
+            padding: dp(14), dp(6)
+            spacing: dp(8)
+            RoundButton:
+                text: root.toggle_text
+                font_size: '14sp'
+                size_hint_x: .4
+                height: dp(46)
+                btn_color: C_PINK
+                on_release: root.toggle()
+            RoundButton:
+                text: 'Simpan sesi'
+                font_size: '14sp'
+                size_hint_x: .38
+                height: dp(46)
+                btn_color: C_VIOLET
+                on_release: root.save_session()
+            RoundButton:
+                text: 'Reset'
+                font_size: '14sp'
+                size_hint_x: .22
+                height: dp(46)
+                btn_color: C_SOFT
+                on_release: root.reset()
+        Label:
+            text: root.total_text
+            font_size: '14sp'
+            bold: True
+            color: C_PURPLE
+            size_hint_y: None
+            height: dp(32)
+        ScrollView:
+            do_scroll_x: False
+            GridLayout:
+                id: sessions
+                cols: 1
+                spacing: dp(4)
+                padding: dp(14), dp(2)
+                size_hint_y: None
+                height: self.minimum_height
+
+# ---------------------------------------------------------------- ROOT
+ScreenManager:
+    LoginScreen:
+    HomeScreen:
+    JournalScreen:
+    DiaryListScreen:
+    DiaryEditScreen:
+    TimetableScreen:
+    StopwatchScreen:
